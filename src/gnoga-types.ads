@@ -38,6 +38,7 @@
 with UXStrings.Hash;
 with Ada.Containers.Indefinite_Vectors;
 with Ada.Containers.Indefinite_Hashed_Maps;
+with Ada.Finalization;
 
 package Gnoga.Types is
    package Data_Arrays is new Ada.Containers.Indefinite_Vectors (Positive, String);
@@ -63,12 +64,12 @@ package Gnoga.Types is
 
    No_Unique_ID : constant Unique_ID := -1;
 
-   type Connection_Data_Type is tagged limited null record;
+   type Connection_Data_Type is abstract new Ada.Finalization.Limited_Controlled with null record;
    type Connection_Data_Access is access all Connection_Data_Type;
    type Pointer_to_Connection_Data_Class is access all Connection_Data_Type'Class;
 
-   type Fractional_Range_Type is delta 0.001 range 0.0 .. 1.0;
-   for Fractional_Range_Type'Small use 0.001;
+   overriding procedure Initialize (Data : in out Connection_Data_Type);
+   overriding procedure Finalize (Data : in out Connection_Data_Type);
 
    subtype Alpha_Type is Fractional_Range_Type;
 

@@ -36,6 +36,7 @@
 ------------------------------------------------------------------------------
 
 with Ada.Exceptions;
+with Text_IO;
 
 package body Gnoga.Types is
    function To_RGBA_From_Hex
@@ -44,6 +45,16 @@ package body Gnoga.Types is
    function To_RGBA_From_RGB_or_RGBA
      (Value : String)
       return RGBA_Type;
+
+   overriding procedure Initialize (Data : in out Connection_Data_Type) is
+   begin
+      Text_IO.Put_Line ("--  Initialize Connection_Data_Type");
+   end Initialize;
+
+   overriding procedure Finalize (Data : in out Connection_Data_Type) is
+   begin
+      Text_IO.Put_Line ("--  Finalize Connection_Data_Type");
+   end Finalize;
 
    ---------------
    -- To_String --

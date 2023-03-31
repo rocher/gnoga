@@ -39,6 +39,7 @@ with Ada.Strings.Wide_Wide_Maps;
 with Ada.Calendar.Formatting;
 with Ada.Unchecked_Deallocation;
 with Ada.Exceptions;
+with Text_IO;
 
 with Gnoga.Client.Storage;
 with Gnoga.Server.Connection;
@@ -113,6 +114,7 @@ package body Gnoga.Gui.Window is
       Gnoga.Gui.Base.Base_Type (Object).Finalize;
 
       if Object.Free_Connection_Data then
+         Text_IO.Put_Line ("--  Freeing Connection_Data" & P'Address'Image);
          Free_Data (P);
          Object.Connection_Data (null);
          Log ("Connection_Data freed on ID " & Image (Object.Connection_ID));
